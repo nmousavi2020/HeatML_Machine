@@ -1,76 +1,96 @@
-🌍 HeatML\_Machine
+🌍 HeatML\_Machine — Global Geothermal Heat Flow Prediction
 
 
 
-Global Geothermal Heat Flow Prediction using Machine Learning
+A machine-learning application for exploring global surface geothermal heat flow (SHF/GHF) predictions at 1° × 1° spatial resolution.
 
 
 
-HeatML\_Machine is an interactive Streamlit application for exploring machine-learning predictions of surface geothermal heat flow (SHF/GHF) at a 1° × 1° spatial resolution.
+Overview
 
 
 
-The application allows users to select a geographic region, choose a machine-learning model, visualize predicted heat flow as a high-resolution contour map, inspect model metrics, and download both the selected prediction data and the generated map.
+HeatML\_Machine provides an interactive Streamlit interface for exploring pre-generated machine-learning predictions of global surface geothermal heat flow.
 
 
 
-Features
+The workflow is:
 
 
 
-🌍 Interactive geographic region selection
+Geophysical Features
+
+&#x20;       ↓
+
+Machine-Learning Model
+
+&#x20;       ↓
+
+1° × 1° Prediction Grid
+
+&#x20;       ↓
+
+Regional Selection
+
+&#x20;       ↓
+
+Heat-Flow Map
+
+&#x20;       ↓
+
+Model Metrics
+
+&#x20;       ↓
+
+CSV / PNG Download
 
 
 
-🤖 Three machine-learning models:
+
+
+Users can select a geographic region, choose a machine-learning model, generate a heat-flow map, inspect model performance, and download the corresponding prediction data.
+
+
+
+Machine-Learning Models
+
+
+
+The application provides predictions from three models:
 
 
 
 XGBoost
 
-
-
 Random Forest
-
-
 
 Deep Neural Network (DNN)
 
 
 
-🔥 Predicted Surface Heat Flow visualization
+
+
+Prediction files:
 
 
 
-🗺️ High-resolution contour maps
+predictions/
+
+├── XGBoost\_GHF\_predictions\_1deg.csv
+
+├── Random\_Forest\_GHF\_predictions\_1deg.csv
+
+└── DNN\_GHF\_predictions\_1deg.csv
 
 
 
-🌊 Dark-blue background for areas without prediction data
+
+
+All prediction datasets have a spatial resolution of:
 
 
 
-🌐 Country and continent boundaries
-
-
-
-📊 Model performance metrics displayed on the map
-
-
-
-📥 Download predictions for the selected region as CSV
-
-
-
-🖼️ Download the generated map as a high-resolution PNG
-
-
-
-📏 Surface Heat Flow units shown as mW/m²
-
-
-
-📍 Longitude and latitude are used for geographic selection and visualization only, and are not used as machine-learning input features
+1° × 1°
 
 
 
@@ -78,7 +98,7 @@ Machine-Learning Features
 
 
 
-The prediction models use the following features:
+The models use six geological and geophysical features:
 
 
 
@@ -96,33 +116,71 @@ Heat\_prod\_provinces
 
 
 
-
-
-Longitude and latitude are geographic coordinates only and are not used as machine-learning input features.
-
-
-
-Prediction Resolution
+Geographic Coordinates
 
 
 
-The prediction datasets have a spatial resolution of:
+Longitude and latitude are used for:
 
 
 
-1° × 1°
+Geographic region selection
+
+
+
+Prediction-cell location
+
+
+
+Map visualization
+
+
+
+They are not used as machine-learning input features.
+
+
+
+Surface Heat Flow
+
+
+
+The predicted variable is:
+
+
+
+Surface Heat Flow (SHF/GHF)
 
 
 
 
 
-Users can define their own geographic bounding box using:
+with units of:
+
+
+
+mW/m²
+
+
+
+
+
+The prediction grid represents the available machine-learning estimates at 1° × 1° spatial resolution.
+
+
+
+Areas without available prediction data are displayed with a dark-blue background on the map.
+
+
+
+Interactive Map
+
+
+
+Users define a geographic bounding box using:
 
 
 
 Longitude minimum
-
-
 
 Longitude maximum
 
@@ -130,35 +188,63 @@ Longitude maximum
 
 Latitude minimum
 
-
-
 Latitude maximum
 
 
 
-Models
+
+
+The workflow is:
 
 
 
-The application supports the following models:
+Select longitude range
+
+&#x20;       ↓
+
+Select latitude range
+
+&#x20;       ↓
+
+Select model
+
+&#x20;       ↓
+
+Generate SHF
+
+&#x20;       ↓
+
+Display prediction map
 
 
 
-Model	Prediction File
 
-XGBoost	XGBoost\_GHF\_predictions\_1deg.csv
 
-Random Forest	Random\_Forest\_GHF\_predictions\_1deg.csv
-
-DNN	DNN\_GHF\_predictions\_1deg.csv
+The generated map contains:
 
 
 
-Prediction files are stored in:
+Predicted surface heat flow
 
 
 
-predictions/
+High-resolution contours
+
+
+
+Country boundaries
+
+
+
+Continent boundaries
+
+
+
+Model information
+
+
+
+Model performance metrics
 
 
 
@@ -176,59 +262,51 @@ models/metrics.json
 
 
 
-The application displays the available:
+The available metrics include:
 
 
 
 R²
 
-
-
 RMSE
 
 
 
-metrics on the lower-left portion of the map.
+
+
+These metrics are displayed on the generated map together with the corresponding model prediction.
 
 
 
-Downloading Regional Data
+Download Regional Data
 
 
 
-After generating a prediction map, users can download the predictions corresponding to their selected geographic region.
+After generating a prediction map, users can download the available prediction cells within the selected geographic bounding box.
 
 
 
-The CSV download contains the available prediction cells within the selected bounding box and includes:
+The CSV contains:
 
 
 
 Model
 
-
-
 Longitude
-
-
 
 Latitude
 
+Prediction
 
+Prediction Unit
 
-Prediction values
-
-
-
-Prediction unit
-
-
-
-Other available prediction-file columns
+Other prediction-file columns
 
 
 
-The prediction unit is:
+
+
+Prediction units:
 
 
 
@@ -236,31 +314,41 @@ mW/m²
 
 
 
-Downloading Maps
+
+
+Only prediction cells available within the selected region are included in the download.
 
 
 
-Users can download the generated map as a high-resolution PNG.
+Download Map
 
 
 
-The map displayed inside the web application is intentionally kept compact for a better single-page layout, while the downloaded PNG is generated at 300 DPI.
+The generated map can also be downloaded as a PNG image.
+
+
+
+The interactive map is kept compact for a cleaner single-page Streamlit interface.
+
+
+
+The downloadable figure is generated at:
+
+
+
+300 DPI
+
+
+
+
+
+This provides a higher-resolution version suitable for further use in reports, presentations, and scientific documentation.
 
 
 
 Project Structure
 
 HeatML\_Machine/
-
-│
-
-├── app.py
-
-├── LICENSE.txt
-
-├── README.md
-
-├── requirements.txt
 
 │
 
@@ -274,15 +362,19 @@ HeatML\_Machine/
 
 │
 
-└── models/
+├── models/
 
-&#x20;   └── metrics.json
+│   └── metrics.json
 
+│
 
+├── app.py
 
+├── requirements.txt
 
+├── README.md
 
-The repository contains the application and pre-generated prediction datasets required for visualization. Training scripts and model-training workflows are not included in this repository.
+└── LICENSE.txt
 
 
 
@@ -290,7 +382,7 @@ Requirements
 
 
 
-Install the required Python packages with:
+Install the required dependencies:
 
 
 
@@ -300,7 +392,7 @@ pip install -r requirements.txt
 
 
 
-The main dependencies are:
+Main dependencies:
 
 
 
@@ -316,11 +408,11 @@ geopandas
 
 
 
-Running the Application
+Run
 
 
 
-From the project directory, run:
+From the project root:
 
 
 
@@ -336,37 +428,87 @@ The application will open in your web browser.
 
 How to Use
 
-
-
-Select the longitude and latitude boundaries of the desired region.
-
-
-
-Select the machine-learning model.
+1\. Select a Region
 
 
 
-Click Generate SHF.
+Define the desired:
 
 
 
-Inspect the predicted surface heat-flow map.
+Longitude minimum
+
+Longitude maximum
+
+Latitude minimum
+
+Latitude maximum
 
 
 
-Review the model metrics shown on the map.
+2\. Select a Model
 
 
 
-Download the regional prediction data as CSV.
+Choose:
 
 
 
-Download the generated map as PNG.
+XGBoost
+
+Random Forest
+
+DNN
+
+
+
+3\. Generate the Prediction Map
+
+
+
+Click:
+
+
+
+Generate SHF
+
+
+
+4\. Explore the Results
+
+
+
+Inspect:
+
+
+
+Predicted Surface Heat Flow
+
+Model Metrics
+
+Geographic Distribution
+
+
+
+5\. Download the Results
+
+
+
+Download:
+
+
+
+Regional CSV
+
+High-resolution PNG
 
 
 
 Scientific Reference
+
+
+
+The prediction methodology is associated with:
 
 
 
@@ -384,6 +526,8 @@ Scientific Reports.
 
 DOI:
 
+
+
 https://doi.org/10.1038/s41598-026-63610-z
 
 
@@ -392,13 +536,19 @@ Citation
 
 
 
-If you use HeatML\_Machine, the associated prediction datasets, or the methodology in academic work, please cite the related publication:
+If you use HeatML\_Machine, the associated prediction datasets, or the methodology in academic work, please cite:
 
 
 
 Mousavi, N., \& Mousavi, S. M. (2026).
 
-Optimizing Feature Selection for Global Geothermal Heat Flow Prediction using Machine Learning.
+
+
+Optimizing Feature Selection for Global Geothermal Heat Flow
+
+Prediction using Machine Learning.
+
+
 
 Scientific Reports.
 
@@ -408,15 +558,53 @@ https://doi.org/10.1038/s41598-026-63610-z
 
 
 
+Repository Scope
+
+
+
+This repository contains the interactive application and pre-generated prediction datasets used for visualization.
+
+
+
+Training scripts and model-training workflows are not included.
+
+
+
+The repository therefore focuses on:
+
+
+
+Pre-generated Predictions
+
+&#x20;       ↓
+
+Interactive Exploration
+
+&#x20;       ↓
+
+Visualization
+
+&#x20;       ↓
+
+Regional Data Export
+
+
+
 License
 
 
 
-HeatML\_Machine is distributed under the license specified in LICENSE.txt.
+HeatML\_Machine is distributed under the license specified in:
 
 
 
-The prediction datasets included in this repository are provided as part of the HeatML\_Machine project. Please refer to LICENSE.txt for the applicable terms and conditions.
+LICENSE.txt
+
+
+
+
+
+Please refer to the license file for the applicable terms and conditions.
 
 
 
@@ -424,9 +612,9 @@ Acknowledgment
 
 
 
-This application provides an interactive interface for exploring pre-generated machine-learning predictions of global geothermal heat flow.
+HeatML\_Machine provides an interactive interface for exploring pre-generated machine-learning predictions of global geothermal heat flow.
 
 
 
-© 2026 N Mousavi \& SM Mousavi — HeatML\_Machine
+© 2026 N. Mousavi \& S. M. Mousavi
 
